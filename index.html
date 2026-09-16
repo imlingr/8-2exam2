@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 八下理化：魔法補考大挑戰 🌟</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        
+        body { 
+            font-family: 'Nunito', 'Noto Sans TC', sans-serif; 
+            background-color: #f0fdf4;
+            background-image: radial-gradient(#dcfce7 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+        
+        .bouncy { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .bouncy:active { transform: scale(0.96); }
+        
+        .fade-in { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { 
+            0% { opacity: 0; transform: translateY(15px); } 
+            100% { opacity: 1; transform: translateY(0); } 
+        }
+
+        .img-shadow { filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); border-radius: 12px; }
+        
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f0fdf4; }
+        ::-webkit-scrollbar-thumb { background: #86efac; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4ade80; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const questions = [
+            // 第一部份 1~20題
+            {
+                id: 1, part: 1,
+                q: "表(一)為常見的離子之表示法，則下列物質的化學式何者正確？",
+                img: "第1題圖片.png",
+                opts: ["(A) 氯化鈉為 NaCl<sub>2</sub>", "(B) 硫酸鈣為 SO<sub>4</sub>Ca", "(C) 氯化氨為 NH<sub>3</sub>Cl", "(D) 碳酸鈉為 Na<sub>2</sub>CO<sub>3</sub>"],
+                ans: 3,
+                exp: "組成化合物時，正負電荷加起來要等於零，而且通常「正離子寫在前面」。<br><br>👉 (A) 不對。鈉是 Na<sup>+</sup>，氯是 Cl<sup>-</sup>，1比1結合，應為 NaCl。<br>👉 (B) 不對。正離子鈣 Ca<sup>2+</sup> 要寫在前面，應為 CaSO<sub>4</sub>。<br>👉 (C) 不對。是「銨」根 NH<sub>4</sub><sup>+</sup> 才對，應為 NH<sub>4</sub>Cl。<br>✨ (D) 完全正確！需要 2 個 Na<sup>+</sup> 才能和 1 個帶負二價的 CO<sub>3</sub><sup>2-</sup> 中和喔。"
+            },
+            {
+                id: 2, part: 1,
+                q: "圖(一)為實驗裝置之示意圖，a連接電池正極，某鹽類溶於水後解離為4個甲粒子與8個乙粒子，其中甲和乙均為帶電的粒子。若已知乙為 Cl<sup>-</sup>，則下列有關此杯水溶液的敘述何者正確？",
+                img: "第2題圖片.png",
+                opts: ["(A) 甲為陽離子，可能為 Na<sup>+</sup>", "(B) 未通電時，甲和乙均分散於水中且靜止不動", "(C) 水溶液中，負電荷的總電量多於正電荷的總電量", "(D) 通電後，甲粒子會向b電極移動"],
+                ans: 3,
+                exp: "水溶液永遠保持「電中性」（正負總電量相等）。<br><br>👉 (A) 不對。8個 Cl<sup>-</sup> 總共有 8 個負電。為了平衡，4個甲必須提供 8 個正電，所以甲是帶 +2 價的陽離子（如 Ca<sup>2+</sup>），不可能是 +1 價的 Na<sup>+</sup>。<br>👉 (B) 不對。離子在水中會不停地做不規則移動。<br>👉 (C) 不對。水溶液一定保持電中性，正負總電量相等。<br>✨ (D) 正確！甲是帶正電的正離子，通電後異性相吸，會往負極（b電極，因為a是正極）跑。"
+            },
+            {
+                id: 3, part: 1,
+                q: "已知某溶液中僅有 H<sup>+</sup>、Na<sup>+</sup>、Zn<sup>2+</sup>、OH<sup>-</sup>、NO<sub>3</sub><sup>-</sup> 五種離子。若溶液中的 [NO<sub>3</sub><sup>-</sup>]=5×10<sup>-2</sup> M，[Na<sup>+</sup>]=1×10<sup>-2</sup> M，其中 H<sup>+</sup>、OH<sup>-</sup> 的數量很少可忽略，則 [Na<sup>+</sup>] : [Zn<sup>2+</sup>] 應為下列何者？",
+                opts: ["(A) 1:2", "(B) 1:3", "(C) 1:4", "(D) 1:5"],
+                ans: 0,
+                exp: "這題的關鍵是利用「電中性原理」：所有正電荷總和 = 所有負電荷總和。<br><br>算式：1 × [Na<sup>+</sup>] + 2 × [Zn<sup>2+</sup>] = 1 × [NO<sub>3</sub><sup>-</sup>]<br>代入數字：0.01 + 2 × [Zn<sup>2+</sup>] = 0.05。<br>算出來 [Zn<sup>2+</sup>] = 0.02 M。<br><br>所以 [Na<sup>+</sup>] : [Zn<sup>2+</sup>] = 0.01 : 0.02 = 1:2。故選 (A)。"
+            },
+            {
+                id: 4, part: 1,
+                q: "甲、乙兩種化合物在水中解離後，陰、陽離子數目都分別是4莫耳與2莫耳，已知兩化合物的水溶液在25℃下其pH值皆為7，則關於甲、乙的敘述下列何者正確？",
+                opts: ["(A) 甲、乙的水溶液中皆不含 H<sup>+</sup> 和 OH<sup>-</sup>", "(B) 乙可能是氯化鎂", "(C) 甲可能是碳酸氫鈉", "(D) 乙水溶液中陽離子所帶的總電量小於陰離子所帶的總電量"],
+                ans: 1,
+                exp: "陰離子有 4 莫耳，陽離子只有 2 莫耳，代表陽離子每顆要帶 2 個正電，陰離子帶 1 個負電，這樣總電量才會相等。<br><br>👉 (A) 不對。只要是水溶液，裡面一定都有 H<sup>+</sup> 和 OH<sup>-</sup>。<br>✨ (B) 正確！氯化鎂 MgCl<sub>2</sub> 解離出 1 個 Mg<sup>2+</sup> 和 2 個 Cl<sup>-</sup>，陽離子與陰離子數量比剛好是 1:2，且它是中性鹽類。<br>👉 (C) 不對。碳酸氫鈉解離的陰陽離子比例是 1:1。<br>👉 (D) 不對。水溶液中，正負總電量永遠相等。"
+            },
+            {
+                id: 5, part: 1,
+                q: "某金屬元素M的氯化物與硫酸鹽的化學式分別為 MCl<sub>2</sub> 與 MSO<sub>4</sub>，則此金屬離子所含的質子、中子與電子數目最可能為下列哪一項組合？",
+                opts: ["(A) 質子數為11，中子數為12，電子數為10", "(B) 質子數為11，中子數為14，電子數為13", "(C) 質子數為12，中子數為12，電子數為10", "(D) 質子數為13，中子數為14，電子數為10"],
+                ans: 2,
+                exp: "由化學式 MCl<sub>2</sub> 可知金屬 M 帶 +2 價（因為 Cl 是 -1），代表它失去了 2 個電子。<br><br>👉 (A) 質子 11 是鈉，通常只帶 +1 價。<br>✨ (C) 正確！質子 12 是鎂，中性時有 12 個電子，失去 2 個電子變 +2 價離子，剩下 10 個電子。<br>👉 (D) 質子 13 是鋁，通常帶 +3 價。"
+            },
+            {
+                id: 6, part: 1,
+                q: "有一實驗裝置如圖(二)，當燒杯內盛裝何者溶液時，燈泡不會發亮？",
+                img: "第6題圖片.png",
+                opts: ["(A) 氫氧化鈉水溶液", "(B) 糖水", "(C) 食鹽水", "(D) 食醋"],
+                ans: 1,
+                exp: "燈泡不亮代表不導電，也就是我們要找「非電解質」。<br><br>👉 (A)、(C)、(D) 分別是鹼、鹽、酸，通通都是電解質，會導電。<br>✨ (B) 糖水是非電解質，溶於水不會產生離子，所以不會導電喔！"
+            },
+            {
+                id: 7, part: 1,
+                q: "有關電解質的敘述，下列何者錯誤？",
+                opts: ["(A) 溶於水能導電的化合物，常溫下，若為固體，則無法導電；若為液態，則可導電", "(B) 電解質必須是化合物", "(C) 電解質之水溶液導電時，在兩極處會有化學反應發生", "(D) 電解質之水溶液必能導電"],
+                ans: 0,
+                exp: "要注意「液態」和「水溶液」的不同喔！<br><br>👉 (A) 錯在這裡。像氯化氫（氣體）或純醋酸（液體）是分子化合物，它們的純「液態」不會解離，是不導電的；要「溶於水」變成水溶液才會導電。如果是離子化合物（如食鹽）熔融成液態才會導電。<br>👉 (B)、(C)、(D) 的敘述都是完全正確的觀念。"
+            },
+            {
+                id: 8, part: 1,
+                q: "拼一研究一未知藥品，該藥品具有以下性質：(甲)置於空氣中會吸收二氧化碳而變質、(乙)溶於水會使溶液溫度上升、(丙)溶於水能使藍色石蕊試紙不變，請問未知藥品為何者？",
+                opts: ["(A) 氫氧化鈣", "(B) 硫酸", "(C) 氫氧化鈉", "(D) 鹽酸"],
+                ans: 2,
+                exp: "我們像偵探一樣從特徵來抓犯人：<br>1. 藍色石蕊試紙不變，代表它不是酸性（可能是鹼性或中性）。<br>2. 吸收空氣中水分和二氧化碳而潮解變質，且溶於水放出大量熱（溫度上升），這是強鹼「氫氧化鈉」的經典特徵！<br><br>👉 (A) 氫氧化鈣溶於水微熱，不會劇烈上升。<br>👉 (B)、(D) 是酸，會讓藍色試紙變紅。"
+            },
+            {
+                id: 9, part: 1,
+                q: "桌上有三種透明無色的溶液甲、乙、丙，已知其中有鹼性溶液、酸性溶液、酚酞指示劑，羽童做了以下測試，如表(二)，則可推測丙溶液為何者？",
+                img: "第9題圖片.png",
+                opts: ["(A) 鹼性溶液", "(B) 酸性溶液", "(C) 酚酞指示劑", "(D) 食鹽水溶液"],
+                ans: 1,
+                exp: "酚酞指示劑的特色是：遇到「鹼」才會變成紅色。<br><br>因為 甲 + 乙 = 紅色，所以甲和乙其中一個是鹼、另一個是酚酞。<br>既然甲和乙沒有酸，那剩下的「丙」就一定是酸性溶液了。<br>✨ (B) 完全合理！酸(丙)加進去後會中和鹼，讓紅色消失變無色（乙+丙、甲+丙皆為無色）。"
+            },
+            {
+                id: 10, part: 1,
+                q: "將1M的硫酸水溶液加水稀釋，則(甲)氫離子濃度 (乙)硫酸根離子濃度 (丙)氫氧根離子濃度 (丁)重量百分濃度 (戊)硫酸的體積莫耳濃度，下列選項中的數值加水後皆會下降？",
+                opts: ["(A) 甲乙丙", "(B) 乙丁戊", "(C) 丙丁戊", "(D) 甲丙戊"],
+                ans: 1,
+                exp: "加水稀釋，就像是把果汁加水，整體會變淡。<br><br>👉 (甲)、(乙)、(戊)：酸變淡，所以 H<sup>+</sup>、SO<sub>4</sub><sup>2-</sup> 的濃度都會下降。<br>👉 (丁)：整體變淡，重量百分濃度當然下降。<br>👉 (丙)：要注意！因為 H<sup>+</sup> 濃度下降，根據水的離子積常數，OH<sup>-</sup> 濃度反而會「上升」。<br>題目要找「皆會下降」的組合，(B) 選項包含的乙、丁、戊都是下降的，為正確答案。"
+            },
+            {
+                id: 11, part: 1,
+                q: "昀潔整理實驗室時發現有三瓶標籤已模糊不清的化學藥品，從藥品的紀錄上可以知道這三瓶藥品為鹽酸、醋酸、氫氧化鈉，昀潔對這三瓶藥品分別做了以下幾個測試，關於昀潔觀察到的結果，下列敘述何者正確？",
+                img: "第11題圖片.png",
+                opts: ["(A) 進行實驗一時，只會看到一瓶溶液不會冒泡", "(B) 進行實驗二時，能看到一紅兩藍的結果", "(C) 進行實驗三時，會看到兩瓶溶液會變色", "(D) 不管進行哪一項實驗都不會發生任何反應"],
+                ans: 0,
+                exp: "這三瓶分別是：鹽酸(強酸)、醋酸(弱酸)、氫氧化鈉(強鹼)。<br><br>✨ (A) 正確！實驗一（加大理石）：只有酸（鹽酸、醋酸）會冒泡產生二氧化碳，氫氧化鈉不會，所以有「一瓶」不冒泡。<br>👉 (B) 錯。實驗二（紅石蕊試紙）：酸不會變色（維持紅），鹼變藍，所以是兩紅一藍。<br>👉 (C) 錯。實驗三（加酚酞）：只有鹼會變紅，兩瓶酸是無色，所以只有「一瓶」變色。"
+            },
+            {
+                id: 12, part: 1,
+                q: "若欲將濃硫酸稀釋成稀硫酸，下列何者操作方法是正確的？",
+                img: "第12題圖片.png",
+                opts: ["(A) 水加入酸", "(B) 水加入酸並攪拌", "(C) 酸加入水並用玻璃棒引流", "(D) 酸直接倒入水中"],
+                ans: 2,
+                exp: "⚠️ 這是非常重要的實驗安全題！濃硫酸碰到水會放出超級巨大的熱量！<br><br>絕對不可以把水倒進酸裡（水會瞬間沸騰噴濺傷人）。<br>正確做法：一定要把「酸」緩慢加入「大量的水」中，並用玻璃棒引流和攪拌幫助散熱。故選 (C)。"
+            },
+            {
+                id: 13, part: 1,
+                q: "有三種不同的液體，甲為0.1M的鹽酸水溶液，乙為蒸餾水，丙為0.1M的氫氧化鈉水溶液，今取10mL的甲和10mL的乙調配成A溶液；取15mL的乙和10mL的丙調配成B溶液；取15mL的甲和15mL的丙調配成C溶液，下列何者適合表示A、B、C三種溶液的性質？",
+                img: "第13題圖片.png",
+                opts: ["(A) pH值大小：A > B > C", "(B) pH值大小：B > C > A", "(C) pH值大小：C > B > A", "(D) pH值大小：A > C > B"],
+                ans: 1,
+                exp: "這題要我們判斷三杯溶液最後的酸鹼性：<br>👉 A溶液：酸 + 水 = 稀釋的酸 (pH < 7)<br>👉 B溶液：水 + 鹼 = 稀釋的鹼 (pH > 7)<br>👉 C溶液：酸 + 鹼 (濃度、體積皆相同) = 完全中和 (pH = 7)<br><br>排排站看 pH 值大小：B(鹼性) > C(中性) > A(酸性)。"
+            },
+            {
+                id: 14, part: 1,
+                q: "穹沛取食鹽、蘇打、石灰三種白色的物質... 依據此表判斷甲、乙、丙分別為下列何種物質？",
+                img: "第14題圖片.png",
+                opts: ["(A) 甲為石灰、乙為蘇打、丙為食鹽", "(B) 甲為蘇打、乙為食鹽、丙為石灰", "(C) 甲為食鹽、乙為石灰、丙為蘇打", "(D) 甲為石灰、乙為食鹽、丙為蘇打"],
+                ans: 3,
+                exp: "一樣用特徵來破案：<br>1. 丙滴入濃硫酸會「產生氣泡」：碳酸根遇酸會產生二氧化碳，所以丙是蘇打（碳酸鈉）。<br>2. 乙加入酚酞「呈無色」：代表是中性。食鹽是中性的，所以乙是食鹽。<br>3. 甲加入酚酞「呈粉紅色」：代表是鹼性。石灰水溶液呈鹼性，所以甲是石灰。<br><br>結論：(D) 甲為石灰、乙為食鹽、丙為蘇打。"
+            },
+            {
+                id: 15, part: 1,
+                q: "朕祥發現實驗桌上有四杯無色透明的溶液，分別為鹽酸、濃硫酸、氫氧化鈉、食鹽水，他想區別出四種溶液，請問何者鑑別方式與推論是正確的？",
+                opts: ["(A) 將四種溶液分別與大理石反應，會冒泡者不一定是鹽酸", "(B) 將四種溶液分別與方糖反應，會讓方糖變黑者一定不是濃硫酸", "(C) 將四種溶液分別滴入酚酞，不會變色者一定是食鹽水", "(D) 將四種溶液分別用紅、藍色石蕊試紙測試，兩種試紙都變紅色者一定是氫氧化鈉"],
+                ans: 0,
+                exp: "✨ (A) 正確！會冒泡代表是酸，這四杯裡鹽酸和硫酸都是酸，所以冒泡的不「一定」是鹽酸，也可能是硫酸喔。<br>👉 (B) 錯。濃硫酸有強烈脫水性，會讓方糖變黑的就是它！<br>👉 (C) 錯。酸性（鹽酸、硫酸）加酚酞也不會變色。<br>👉 (D) 錯。兩張都變紅代表是酸性；氫氧化鈉是鹼，會讓兩張都變藍。"
+            },
+            {
+                id: 16, part: 1,
+                q: "關於文字中「氨氣」的相關敘述下列何者正確？",
+                opts: ["(A) 稀釋後可以作為清潔劑使用，也可用於製作肥料", "(B) 比空氣輕，故可以使用排水集氣法收集", "(C) 易溶於水，且為黃綠色氣體", "(D) 溶於水中會使藍色石蕊試紙變紅色"],
+                ans: 0,
+                exp: "✨ (A) 正確！阿摩尼亞水常做清潔劑，也是重要的氮肥原料。<br>👉 (B) 錯。它非常容易溶於水，所以「不能」用排水集氣法，要用向下排氣法。<br>👉 (C) 錯。氨氣是無色、有刺激性臭味的。<br>👉 (D) 錯。氨水是弱鹼性，會讓紅色試紙變藍色。"
+            },
+            {
+                id: 17, part: 1,
+                q: "服用含碳酸氫鈉的胃藥，有效緩解了其不適症狀。關於上述的狀況，埕晏的胃部pH值變化較接近下列何者？",
+                img: "第17題圖片.png",
+                opts: ["(A) 曲線由pH=7往下降", "(B) 曲線由pH=8往下降", "(C) 曲線由pH=2往上升但不超過7", "(D) 曲線由pH=2往上升超過7"],
+                ans: 2,
+                exp: "胃酸原本很酸 (pH值很低，大約2~3)。<br><br>吃下弱鹼性的胃藥中和後，pH值會「上升」，但不會超過7變成強鹼，所以曲線是從低處往上爬升靠近中性。答案選 (C)。"
+            },
+            {
+                id: 18, part: 1,
+                q: "水溶液之pH值由大到小排列的順序，下列何者正確？",
+                img: "第18題圖片.png",
+                opts: ["(A) 甲>乙>丙>丁", "(B) 乙>甲>丁>丙", "(C) 丙>丁>甲>乙", "(D) 丁>乙>甲>丙"],
+                ans: 2,
+                exp: "請記得：氫離子濃度 H<sup>+</sup> 越「小」，pH值就越「大」（越偏鹼性）。<br><br>比較H<sup>+</sup>濃度大小：乙(5×10<sup>-6</sup>) > 丁(7×10<sup>-8</sup>) > 甲(1×10<sup>-7</sup>) > 丙(2×10<sup>-9</sup>)。（注意科學記號次方的負號越小代表數字越大）。<br><br>反過來，pH值大小就是：丙 > 丁 > 甲 > 乙。"
+            },
+            {
+                id: 19, part: 1,
+                q: "甲溶液由水+氫氧化鈉混合，乙溶液由水+甲溶液混合，下列有關甲、乙兩溶液的pH值關係何者正確？",
+                opts: ["(A) 甲>乙>水", "(B) 甲>水>乙", "(C) 乙>水>甲", "(D) 水>甲>乙"],
+                ans: 0,
+                exp: "👉 甲是鹼性溶液 (pH > 7)。<br>👉 乙是把甲「加水稀釋」，所以鹼性變弱，pH值會下降靠近 7，但因為還是鹼性所以大於 7。<br>👉 純水 pH = 7。<br><br>所以大小順序是 甲 > 乙 > 水。"
+            },
+            {
+                id: 20, part: 1,
+                q: "硫酸、鹽酸、醋酸，用pH計檢測發現三種酸的pH值皆為3，下列關於三杯酸性溶液的氫離子濃度大小排序何者正確？",
+                opts: ["(A) 甲(硫酸) > 乙(鹽酸) > 丙(醋酸)", "(B) 丙 > 乙 > 甲", "(C) 乙 > 甲 > 丙", "(D) 甲=乙=丙"],
+                ans: 3,
+                exp: "pH值的定義就是由「氫離子濃度」決定的。<br><br>既然這三杯的 pH 值通通都是 3，那就代表水中的氫離子濃度通通一模一樣！所以 甲=乙=丙。"
+            },
+
+            // 第二部份 21~40題
+            {
+                id: 21, part: 2,
+                q: "承上題(硫酸甲、鹽酸乙、醋酸丙，pH值皆為3)，請問三種酸的體積莫耳濃度由大至小的排序為何？",
+                opts: ["(A) 甲>乙>丙", "(B) 丙>乙>甲", "(C) 乙>甲>丙", "(D) 甲=乙=丙"],
+                ans: 1,
+                exp: "現在大家解離出來的 H<sup>+</sup> 數量一樣多。<br><br>👉 甲(硫酸)：1 個分子能放出 2 個 H<sup>+</sup>，所以只需要最少的本尊濃度。<br>👉 乙(鹽酸)：1 個分子放 1 個 H<sup>+</sup>，強酸完全解離。<br>👉 丙(醋酸)：是弱酸，只有極少數分子會解離。為了湊齊一樣多的 H<sup>+</sup>，必須要有超級多的「本尊」在水裡。所以它的實際濃度最大。<br><br>順序：丙(醋酸) > 乙(鹽酸) > 甲(硫酸)。"
+            },
+            {
+                id: 22, part: 2,
+                q: "用已知濃度的鹽酸來滴定未知濃度的氫氧化鈉... 下列關於實驗的敘述何者錯誤？",
+                img: "第22題圖片.png",
+                opts: ["(A) 鹽酸應倒入A器材，氫氧化鈉水溶液應倒入B器材", "(B) 酚酞指示劑應滴入B器材內，且滴1~2滴即可", "(C) 當B器材內的溶液顏色由紅色轉為無色，即達到滴定終點", "(D) 滴定完成時，B器材的溫度會比反應前低"],
+                ans: 3,
+                exp: "酸鹼中和是一個「放熱反應」。<br><br>👉 (D) 錯在這裡。滴定完成時因為中和放出了熱量，所以錐形瓶(B器材)的溫度會「升高」，比反應前還要高喔！"
+            },
+            {
+                id: 23, part: 2,
+                q: "承上題，逐滴加入水溶液至B器材中，請問B器材中溶液之pH值的變化應為下列何者較合理？",
+                img: "第23題圖片.png",
+                opts: ["(A) 曲線由大於7往下降", "(B) 曲線由小於7往上升", "(C) 曲線保持在7", "(D) 曲線先升後降"],
+                ans: 0,
+                exp: "B器材(錐形瓶)本來裝的是「氫氧化鈉鹼性溶液」(pH>7)。<br><br>慢慢滴入鹽酸後，pH值會開始往下降，經過 7 (中性) 後，繼續滴酸就會變成酸性 (pH<7)。因此曲線應為由上方大於7處往下墜。"
+            },
+            {
+                id: 24, part: 2,
+                q: "下列關於「鹽類」的敘述，何者正確？",
+                opts: ["(A) 石膏的主要成分為碳酸鈣", "(B) 製作豆腐時會添加硫酸鈣作為凝固劑", "(C) 碳酸鈉俗稱蘇打，遇熱會分解出二氧化碳氣體，故可作膨鬆劑使用", "(D) 小蘇打在生活中常作為清潔劑使用，故又稱洗滌鹼"],
+                ans: 1,
+                exp: "👉 (A) 錯。石膏成分是硫酸鈣 (CaSO<sub>4</sub>)。<br>✨ (B) 正確！硫酸鈣可以讓豆漿凝固成豆腐。<br>👉 (C) 錯。是小蘇打（碳酸氫鈉）遇熱才會產生二氧化碳當膨鬆劑。<br>👉 (D) 錯。碳酸鈉才叫「洗滌鹼」，小蘇打是碳酸氫鈉（焙用鹼）。"
+            },
+            {
+                id: 25, part: 2,
+                q: "2CrO<sub>4</sub><sup>2-</sup>(黃色) + 2H<sup>+</sup> &rightleftharpoons; Cr<sub>2</sub>O<sub>7</sub><sup>2-</sup>(橘紅色) + H<sub>2</sub>O 的平衡反應中，原本橘紅色的水溶液，加入下列何者物質，會使水溶液顏色從橘紅色變回黃色？",
+                opts: ["(A) CH<sub>3</sub>COOH", "(B) C<sub>2</sub>H<sub>5</sub>OH", "(C) NaCl", "(D) Na<sub>2</sub>CO<sub>3</sub>"],
+                ans: 3,
+                exp: "反應式左邊是黃色，右邊是橘紅色。<br><br>要把橘紅變回黃色，反應要「向左跑」。也就是要「消耗掉 H<sup>+</sup>」。<br>加鹼可以中和掉 H<sup>+</sup>。(D) 碳酸鈉 (Na<sub>2</sub>CO<sub>3</sub>) 溶於水呈弱鹼性，加進去剛好可以中和酸，讓反應向左跑回去變黃色。"
+            },
+            {
+                id: 26, part: 2,
+                q: "取相同莫耳數且表面積大小相同的X金屬和Y金屬... 已知X對氧的活性大於Y，則產生氫氣莫耳數與反應時間的關係最可能為下列何者？",
+                img: "第26題圖片.png",
+                opts: ["(A) X、Y產生總量不同", "(B) X較快達最高點，兩者總量相同", "(C) Y較快達最高點，兩者總量相同", "(D) X產生量較少"],
+                ans: 1,
+                exp: "活性 X > Y，代表 X 反應得比較「快」，所以 X 的線條斜率會比較陡，較快到達最高點。<br><br>但因為兩者「莫耳數相同」，最後累積產生的氫氣「總量」是一樣多的。所以兩條線最後會碰到一樣的高度。"
+            },
+            {
+                id: 27, part: 2,
+                q: "將相同體積但濃度分別為0.1M、0.2M、0.3M的鹽酸與顆粒大小及質量均相同的大理岩反應，並測量反應速率(R)與溫度(T)的關係，請問其關係曲線應為下列何者？",
+                img: "第27題圖片.png",
+                opts: ["(A) 溫度越高速率越慢", "(B) 溫度越高速率越快，且0.3M在最上方", "(C) 0.1M在最上方", "(D) 速率與溫度無關"],
+                ans: 1,
+                exp: "這題考了兩個觀念：<br>1. 溫度越高，反應速率越快（線會往上翹）。<br>2. 濃度越高 (0.3M > 0.2M > 0.1M)，反應速率也越快。<br><br>所以 0.3M 跑得最快，它的線要在最上方。"
+            },
+            {
+                id: 28, part: 2,
+                q: "在25℃下，某固定體積之密閉系統中的化學反應已達成平衡，其反應式為： 2NO<sub>2(g)</sub>(紅棕色) &rightleftharpoons; N<sub>2</sub>O<sub>4(g)</sub>(無色) + 熱量，則下列敘述何者正確？",
+                opts: ["(A) 當系統溫度下降時，氣體顏色變深", "(B) 當系統溫度上升時，氣體總原子數增加", "(C) 當系統溫度上升時，N<sub>2</sub>O<sub>4</sub> 分子數減少", "(D) 系統溫度上升時，反應向右進行"],
+                ans: 2,
+                exp: "這是一個「放熱」反應（熱量寫在右邊）。<br><br>✨ (C) 正確！溫度上升，系統會覺得「太熱了，把熱消耗掉」，所以反應會向左邊（吸熱方向）跑。這時右邊的 N<sub>2</sub>O<sub>4</sub> 就會減少，左邊的紅棕色變深。<br>👉 密閉系統總原子數是不變的。"
+            },
+            {
+                id: 29, part: 2,
+                q: "甲、乙、丙三試管中各加入20mL的鹽酸，但鹽酸的pH值分別為2、4、1... 三支試管生成氣體的反應速率關係為何？",
+                opts: ["(A) 甲>丙>乙", "(B) 甲>乙>丙", "(C) 丙>甲>乙", "(D) 乙>丙>甲"],
+                ans: 2,
+                exp: "酸性溶液中，pH值越「小」，代表酸的濃度越「高」，反應速率就越「快」。<br><br>pH值大小：丙(1) < 甲(2) < 乙(4)。<br>酸濃度大小：丙 > 甲 > 乙。<br>所以反應速率也是：丙 > 甲 > 乙。"
+            },
+            {
+                id: 30, part: 2,
+                q: "已知氯氣溶於水為一可逆反應(Cl<sub>2</sub> + H<sub>2</sub>O &rightleftharpoons; HCl + HClO)... 試問除了煮沸促成氯氣揮發消散外，請在下列的各項操作中，選出減少水中氯氣最好方法？",
+                opts: ["(A) 加入適量的石灰", "(B) 加入適量的食鹽", "(C) 加入適量的鹽酸", "(D) 加入適量的酒精"],
+                ans: 0,
+                exp: "看看反應式：Cl<sub>2</sub> + H<sub>2</sub>O &rightleftharpoons; HCl + HClO。<br>右邊產生了酸 (H<sup>+</sup>)。<br><br>若加入鹼性的石灰 (A)，可以中和掉右邊的酸，系統為了補充被消耗掉的酸，會讓反應一直往右跑，這樣左邊的氯氣就會被大量消耗掉！"
+            },
+            {
+                id: 31, part: 2,
+                q: "他發現若將瓶內的二氧化錳取出磨碎後，再重新進行實驗，收集一瓶氧氣所需的時間則會變短，此現象主要與影響反應速率的何種因素有關？",
+                img: "第31題圖片.png",
+                opts: ["(A) 濃度", "(B) 活性", "(C) 催化劑", "(D) 接觸面積"],
+                ans: 3,
+                exp: "把固體「磨碎」，就是為了增加它與反應物之間的「接觸面積」，接觸面積變大，反應速度自然就變快囉。"
+            },
+            {
+                id: 32, part: 2,
+                q: "把棉芯向上拉，然後以手指搓開棉芯，再次點火後可以看到火焰明顯變大，試問其應用原理與下列何種操作方式最相似？",
+                opts: ["(A) 將肉品放冰箱冷凍庫", "(B) 汽油常溫下可安全保存，但點火則劇烈燃燒", "(C) 寺廟拜拜，燃燒紙錢時，將紙錢打散弄亂", "(D) 口腔內的口水有酵素，可以分解澱粉"],
+                ans: 2,
+                exp: "搓開棉芯的目的，也是為了「增加接觸面積」。<br><br>這就跟燒金紙時把金紙「打散弄亂」(C) 的原理一模一樣，能讓紙張跟空氣的接觸面積變大，火就燒得更旺。"
+            },
+            {
+                id: 33, part: 2,
+                q: "有一可逆反應：2甲 &rightleftharpoons; 乙，正反應速率 = 3×10<sup>-3</sup>，逆反應速率 = 5×10<sup>-7</sup>，則關於此反應的敘述，下列何者正確？",
+                opts: ["(A) 已達平衡狀態", "(B) 反應物及生成物之濃度相同", "(C) 未達平衡狀態，反應向右方進行", "(D) 未達平衡狀態，反應向左方進行"],
+                ans: 2,
+                exp: "正反應速率 (3×10<sup>-3</sup>) 比 逆反應速率 (5×10<sup>-7</sup>) 大非常多。<br><br>因為兩邊速率不一樣，所以「未達平衡」。而且因為正反應速度比較快，所以反應正朝著「右方」快速進行。"
+            },
+            {
+                id: 34, part: 2,
+                q: "氮氣與氫氣在高溫、高壓下製氨... 當反應達平衡後，下列哪一項方法無法改變原平衡狀態？",
+                img: "第34題圖片.png",
+                opts: ["(A) 增加氦氣與氫氣的濃度", "(B) 增加催化劑的量", "(C) 增高溫度", "(D) 降低溫度"],
+                ans: 1,
+                exp: "催化劑的功用是讓反應「快點到達」平衡，但是它「不會」改變最後平衡的狀態或產生的總量。<br><br>所以改變催化劑的量，無法改變平衡狀態。"
+            },
+            {
+                id: 35, part: 2,
+                q: "關於文章內容，下列敘述何者正確？",
+                img: "第35題圖片.png",
+                opts: ["(A) 將游泳池的pH值控制在7.2~7.8之間，能降低設備受酸鹼侵蝕或水垢形成之風險", "(B) 增加消毒藥劑之殘留濃度可直接提升殺菌效率，過量殘留不會造成影響", "(C) 若pH值在標準範圍內，無需擔心其他殘留造成影響", "(D) 只要設備運作正常，pH值偏離標準範圍對水質沒有太大影響"],
+                ans: 0,
+                exp: "✨ (A) 正確！根據文章，控制 pH 值能避免酸蝕和水垢，確保使用者舒適。<br>👉 過多殘留會傷害人體 (B錯)。<br>👉 只看pH值不夠，還要檢測餘氯等 (C錯)。<br>👉 偏離範圍影響很大 (D錯)。"
+            },
+            {
+                id: 36, part: 2,
+                q: "若要用來檢測游泳池pH值是否在安全範圍內 (7.2~7.8)，使用下列哪一個指示劑檢測較適合？",
+                img: "第36題圖片.png",
+                opts: ["(A) 甲基紅", "(B) 甲基橙", "(C) 酚酞", "(D) 酚紅"],
+                ans: 3,
+                exp: "酚紅的變色範圍是 6.8 ~ 8.3。<br><br>這剛好涵蓋了泳池的安全範圍 7.2 ~ 7.8，只要顏色處在中間轉換階段，就能知道水質是否達標。"
+            },
+            {
+                id: 37, part: 2,
+                q: "發現游泳池pH值為8.3，請問可以加入何者，讓游泳池的pH值在安全範圍內？",
+                opts: ["(A) 加入適量的碳酸鈣", "(B) 加入適量的氫氧化鈉", "(C) 加入適量的小蘇打粉", "(D) 加入適量的稀鹽酸"],
+                ans: 3,
+                exp: "pH 8.3 代表水太「鹼」了。<br><br>要把 pH 值降下來，就必須加「酸」。四個選項中，只有稀鹽酸是酸性物質。"
+            },
+            {
+                id: 38, part: 2,
+                q: "關於本實驗(硫代硫酸鈉與鹽酸)，下列敘述何者正確？",
+                img: "第38題圖片.png",
+                opts: ["(A) 生成有臭味的淡黃色沉澱 SO<sub>2</sub>", "(B) 眼睛可以從各處觀察", "(C) NaCl 是生成物之一", "(D) 以上皆正確"],
+                ans: 2,
+                exp: "反應式 Na<sub>2</sub>S<sub>2</sub>O<sub>3</sub> + 2HCl → 2NaCl + SO<sub>2</sub> + S + H<sub>2</sub>O<br><br>👉 反應會產生二氧化硫氣體（有臭味），以及「硫」的黃色固體沉澱，並非產生 SO<sub>2</sub> 沉澱 (A錯)。<br>👉 觀察要由上往下俯視 (B錯)。<br>✨ 反應會產生鹽巴 NaCl (C正確)。"
+            },
+            {
+                id: 39, part: 2,
+                q: "若四次實驗在停止計時的瞬間，遮住十字的產物量分別為W、X、Y、Z，則下列敘述何者正確？",
+                img: "第39題圖片.png",
+                opts: ["(A) W>X>Y>Z", "(B) W<X<Y<Z", "(C) W=X=Y=Z", "(D) 無法判斷"],
+                ans: 2,
+                exp: "在這個實驗中，不論濃度或溫度怎麼改變，「剛好遮住瓶底十字」所需要的黃色硫沉澱量是「固定的」！<br><br>所以四次實驗停止瞬間的產物量完全一樣，即 W=X=Y=Z。"
+            },
+            {
+                id: 40, part: 2,
+                q: "請由溫度與反應速率曲線圖推求當溫度45℃時，遮住瓶底十字所需的時間可能為？",
+                img: "第40題圖片.png",
+                opts: ["(A) 10秒", "(B) 20秒", "(C) 26秒", "(D) 32秒"],
+                ans: 1,
+                exp: "從表格裡的數據找線索：<br>1. 40℃ 時花了 30 秒，50℃ 時花了 15 秒。<br>2. 45℃ 介於中間，時間一定介於 15秒 到 30秒 之間。<br>3. 比較反應速率（時間的倒數）：40℃ 速率約 0.033，50℃ 速率約 0.066。<br>4. 45℃ 的速率大約是中間值 (0.033+0.066)/2 ≈ 0.05。<br>5. 速率是 0.05，時間就是 1 ÷ 0.05 = 20 秒。所以 (B) 最合理！"
+            }
+        ];
+
+        const { useState, useEffect } = React;
+
+        const Header = () => (
+            <header className="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-10 py-4 mb-6">
+                <div className="max-w-4xl mx-auto px-4 flex items-center justify-center gap-3">
+                    <span className="text-3xl">🧪</span>
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-500 to-green-500 tracking-wide">
+                        八下理化：魔法補考大挑戰
+                    </h1>
+                    <span className="text-3xl">✨</span>
+                </div>
+            </header>
+        );
+
+        const QuestionCard = ({ item, index, selectedIdx, onSelect, isReviewMode }) => {
+            const showResult = selectedIdx !== undefined && selectedIdx !== null;
+
+            const handleSelect = (idx) => {
+                if (!showResult) {
+                    onSelect(item.id, idx, idx === item.ans);
+                }
+            };
+
+            const createMarkup = (htmlStr) => {
+                return { __html: htmlStr };
+            };
+
+            return (
+                <div className="mb-10 w-full max-w-3xl mx-auto fade-in">
+                    <div className="bg-white rounded-3xl shadow-[0_4px_20px_rgb(0,0,0,0.05)] overflow-hidden border border-gray-100">
+                        {/* Question Header */}
+                        <div className={`p-5 border-b border-gray-50 flex gap-3 ${isReviewMode ? 'bg-gradient-to-r from-rose-100 to-red-100' : 'bg-gradient-to-r from-blue-100 to-teal-100'}`}>
+                            <div className={`flex-shrink-0 w-10 h-10 bg-white rounded-full flex items-center justify-center font-black shadow-sm text-lg ${isReviewMode ? 'text-rose-600' : 'text-teal-600'}`}>
+                                {item.id}
+                            </div>
+                            <div className="text-lg font-bold text-gray-800 self-center leading-relaxed" 
+                                 dangerouslySetInnerHTML={createMarkup(item.q)} />
+                        </div>
+                        
+                        {/* Question Image */}
+                        {item.img && (
+                            <div className="p-4 bg-gray-50 flex justify-center border-b border-gray-100">
+                                <img src={item.img} alt={`第${item.id}題圖片`} className="max-w-full h-auto max-h-64 object-contain img-shadow rounded-lg border-2 border-white" />
+                            </div>
+                        )}
+
+                        {/* Options */}
+                        <div className="p-5 space-y-3">
+                            {item.opts.map((opt, idx) => {
+                                const isSelected = selectedIdx === idx;
+                                const isCorrect = idx === item.ans;
+                                
+                                let btnClass = "w-full text-left p-4 rounded-2xl border-2 transition-all duration-300 ease-out relative flex items-center gap-4 group ";
+                                let icon = null;
+
+                                if (!showResult) {
+                                    btnClass += isReviewMode 
+                                        ? "border-rose-50 bg-white hover:border-rose-300 hover:bg-rose-50 bouncy text-gray-700 cursor-pointer shadow-sm" 
+                                        : "border-blue-50 bg-white hover:border-teal-300 hover:bg-teal-50 bouncy text-gray-700 cursor-pointer shadow-sm";
+                                    icon = <div className={`w-6 h-6 rounded-full border-2 ${isReviewMode ? 'border-gray-300 group-hover:border-rose-400' : 'border-gray-300 group-hover:border-teal-400'}`}></div>;
+                                } else {
+                                    btnClass += " cursor-default ";
+                                    if (isCorrect) {
+                                        btnClass += "border-green-400 bg-green-50 text-green-800 shadow-md transform scale-[1.01]";
+                                        icon = <div className="flex-shrink-0 w-7 h-7 rounded-full bg-green-500 text-white flex items-center justify-center shadow-sm"><i className="fas fa-check"></i></div>;
+                                    } else if (isSelected && !isCorrect) {
+                                        btnClass += "border-red-300 bg-red-50 text-red-700 opacity-90";
+                                        icon = <div className="flex-shrink-0 w-7 h-7 rounded-full bg-red-400 text-white flex items-center justify-center shadow-sm"><i className="fas fa-times"></i></div>;
+                                    } else {
+                                        btnClass += "border-gray-100 bg-gray-50 text-gray-400";
+                                        icon = <div className="w-6 h-6 rounded-full border-2 border-gray-200"></div>;
+                                    }
+                                }
+
+                                return (
+                                    <button 
+                                        key={idx} 
+                                        onClick={() => handleSelect(idx)}
+                                        className={btnClass}
+                                        disabled={showResult}
+                                    >
+                                        {icon}
+                                        <span className="text-base md:text-lg" dangerouslySetInnerHTML={createMarkup(opt)} />
+                                    </button>
+                                );
+                            })}
+                        </div>
+
+                        {/* Explanation Box */}
+                        {showResult && (
+                            <div className="m-5 mt-0 bg-yellow-50 border-2 border-yellow-300 rounded-2xl p-6 relative fade-in">
+                                <div className="absolute -top-4 left-6 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white px-5 py-1.5 rounded-full font-bold shadow-md flex items-center gap-2 tracking-wider">
+                                    <i className="fas fa-lightbulb"></i> ✨ 觀念大補帖
+                                </div>
+                                <div className="mt-3 text-gray-800 leading-relaxed text-base md:text-lg">
+                                    {selectedIdx === item.ans ? 
+                                        <div className="mb-3 font-bold text-green-600 flex items-center gap-2">
+                                            <i className="fas fa-party-horn"></i>
+                                            {isReviewMode ? "太棒了！你成功克服這題了 🎉" : "太棒了！答對囉 🎉"}
+                                        </div> : 
+                                        <div className="mb-3 font-bold text-red-500 flex items-center gap-2">
+                                            <i className="fas fa-face-thinking"></i>哎呀，再想想看！來看看哪裡卡住了 🤔
+                                        </div>
+                                    }
+                                    <div className="space-y-2 border-t border-yellow-200 pt-3" dangerouslySetInnerHTML={createMarkup(item.exp)} />
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeTab, setActiveTab] = useState('part1');
+            const [answers, setAnswers] = useState({});
+            const [reviewAnswers, setReviewAnswers] = useState({});
+            const [wrongIds, setWrongIds] = useState([]);
+
+            const handleSelect = (qId, idx, isCorrect) => {
+                if (activeTab === 'review') {
+                    setReviewAnswers(prev => ({ ...prev, [qId]: idx }));
+                } else {
+                    setAnswers(prev => ({ ...prev, [qId]: idx }));
+                    if (!isCorrect) {
+                        setWrongIds(prev => prev.includes(qId) ? prev : [...prev, qId]);
+                    }
+                }
+            };
+
+            const resetReview = () => {
+                setReviewAnswers({});
+            };
+
+            // Scroll to top when switching parts
+            useEffect(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, [activeTab]);
+
+            let currentQuestions = [];
+            if (activeTab === 'part1') currentQuestions = questions.filter(q => q.part === 1);
+            else if (activeTab === 'part2') currentQuestions = questions.filter(q => q.part === 2);
+            else if (activeTab === 'review') currentQuestions = questions.filter(q => wrongIds.includes(q.id));
+
+            return (
+                <div className="min-h-screen pb-20">
+                    <Header />
+                    
+                    {/* Tab Navigation */}
+                    <div className="max-w-3xl mx-auto px-4 mb-8 flex flex-wrap gap-4">
+                        <button 
+                            onClick={() => setActiveTab('part1')}
+                            className={`flex-1 min-w-[100px] py-3 px-4 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 shadow-sm ${activeTab === 'part1' ? 'bg-teal-500 text-white shadow-md transform -translate-y-1' : 'bg-white text-gray-500 hover:bg-teal-50'}`}
+                        >
+                            第一部份 (1~20)
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('part2')}
+                            className={`flex-1 min-w-[100px] py-3 px-4 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 shadow-sm ${activeTab === 'part2' ? 'bg-teal-500 text-white shadow-md transform -translate-y-1' : 'bg-white text-gray-500 hover:bg-teal-50'}`}
+                        >
+                            第二部份 (21~40)
+                        </button>
+                        <button 
+                            onClick={() => setActiveTab('review')}
+                            className={`flex-1 min-w-[100px] py-3 px-4 rounded-2xl font-bold text-base md:text-lg transition-all duration-300 shadow-sm relative ${activeTab === 'review' ? 'bg-rose-500 text-white shadow-md transform -translate-y-1' : 'bg-white text-gray-500 hover:bg-rose-50'}`}
+                        >
+                            錯題複習
+                            {wrongIds.length > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-black px-2 py-1 rounded-full shadow-md animate-bounce">
+                                    {wrongIds.length}
+                                </span>
+                            )}
+                        </button>
+                    </div>
+
+                    {/* Question List or Empty State */}
+                    {activeTab === 'review' && wrongIds.length === 0 ? (
+                        <div className="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100 max-w-3xl mx-auto px-4 fade-in">
+                            <div className="text-6xl mb-4">🌟</div>
+                            <h2 className="text-2xl md:text-3xl font-bold text-teal-600 mb-2">太棒了！目前沒有錯題喔！</h2>
+                            <p className="text-gray-500 text-lg">繼續保持，你是理化小天才！</p>
+                        </div>
+                    ) : (
+                        <div className="px-4">
+                            {activeTab === 'review' && (
+                                <div className="max-w-3xl mx-auto mb-6 flex justify-between items-center fade-in">
+                                    <h2 className="text-xl font-bold text-rose-600">
+                                        <i className="fas fa-fire mr-2"></i>錯題特訓區
+                                    </h2>
+                                    <button 
+                                        onClick={resetReview}
+                                        className="px-4 py-2 bg-rose-100 text-rose-600 rounded-full font-bold hover:bg-rose-200 transition-colors text-sm shadow-sm"
+                                    >
+                                        <i className="fas fa-redo mr-1"></i> 重新測驗
+                                    </button>
+                                </div>
+                            )}
+                            
+                            {currentQuestions.map((q, idx) => (
+                                <QuestionCard 
+                                    key={`${activeTab}-${q.id}`} 
+                                    item={q} 
+                                    index={idx} 
+                                    selectedIdx={activeTab === 'review' ? reviewAnswers[q.id] : answers[q.id]}
+                                    onSelect={handleSelect}
+                                    isReviewMode={activeTab === 'review'}
+                                />
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Footer */}
+                    <div className="text-center mt-12 text-gray-400 font-medium pb-8">
+                        <p>勇敢挑戰，理化一點都不難！💪</p>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
